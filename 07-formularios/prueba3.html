@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html ng-app="Bookmarks">
+<head>
+    <title>Installation - Angular JS</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<!-- System Character Code -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Latest compiled and minified JavaScript -->
+</head>
+<body ng-controller="MainController">
+    
+    <!-- wrapper -->
+    
+    <div class="wrapper">
+        
+        <!-- header -->
+        
+        <header class="header header-fixed navbar container-fluid">
+            <div class="row">
+                <div class="brand col-sm-3">
+                    <a href="#" class="navbar-brand">
+                        <i class="glyphicon glyphicon-heart-empty"></i>
+                        <span class="heading-font">Bookmarks App</span>
+                    </a>
+                </div>
+                
+                
+            </div>
+        </header>
+        
+        <!-- /header -->
+        
+        <div class="box">
+            <div class="row">
+                
+                <!-- sidebar -->
+                <div class="column col-sm-3" id="sidebar">
+                    <p class="nav-title">
+                        Categories
+                        <a href="#" class="pull-right"><i class="glyphicon glyphicon-folder-open"></i></a>
+                    </p>
+                    <ul class="nav">
+                        <li ng-repeat="category in categories" ng-class="{active: isCurrentCategory(category) === category}">
+                            <a href="" ng-click="setCurrentCategory(category)">({{category}})</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /sidebar -->
+                
+                <!-- content -->
+                
+                <div class="column col-sm-9" id="main">
+                    <div class="padding">
+                        <div class="full col-sm-9">
+                            <!-- content -->
+                            <h2>
+                                Category: {{currentCategory}}
+                                <a href="#" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#bookmarkModal"><i class="glyphicon glyphicon-plus-sign"></i>New bookmark</a>
+                            </h2>
+                            <ul>
+                                <li ng-repeat="bookmark in bookmarks | filter: {category: currentCategory}">
+                                    <p>
+                                        <a href="{{bookmark.url}}">{{bookmark.name}}</a>
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                        <i class="glyphicon glyphicon-pencil"></i></br>
+                                        <small>{{bookmark.url}}</small>
+                                    </p>
+                                </li>
+                            </ul>
+                            
+                        </div><!-- /col-9 -->
+                    </div><!-- /padding -->
+                </div>
+                
+                <!-- /content -->
+                
+            </div>
+        </div>
+        
+        
+    </div>
+    
+    <!-- /wrapper -->
+    
+    <!-- Bookmark form -->
+        <div class="modal fade" id="bookmarkModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+              </div>
+              <div class="modal-body">
+                
+                  <form id="bookmarkForm">
+                      <p>Please enter the title and the url for your bookmark, all fields are required.</p>
+                      
+                      <div class="form-group">
+                        <label for="category">Category</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-bookmark"></i>
+                            </div>
+                            <select ng-model="bookmark.category" ng-options="value for value in categories" id="category" class="form-control"></select>
+                        </div>    
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="title">Title</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-bookmark"></i>
+                            </div>
+                            <input ng-model="bookmark.title" id="title" class="form-control" type="text" placeholder="Enter the Title">
+                        </div>    
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="url">URL</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-link"></i>
+                            </div>
+                            <input ng-model="bookmark.url" id="url" class="form-control" type="url" placeholder="Enter the URL">
+                        </div>    
+                      </div>
+                      
+                  </form>
+                  
+                  
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="save(bookmark)" type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    <!-- /Bookmark form -->
+    
+    <script type="text/javascript" src="lib/angular.js"></script>
+    <script type="text/javascript" src="js/app2.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>
