@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="myApp" ng-controller="myCtrl">
     <head>
         <title>Prueba 1 - AngularJS</title>
         <script type="text/javascript" src="lib/angular.js"></script>
+        <meta charset="utf8">
+        <style>
+            body{
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
         
@@ -16,9 +22,45 @@
         <!-- <input type="text" ng-model="nombre" /> -->
         <h1>{{nombre}}</h1>
         
+        <div>
+            <select ng-model="selectedCategory">
+                <option ng-repeat="value in categories" value="{{value}}" ng-selected="setCurrentCategory(selectedCategory)">{{value}}</option>
+            </select>
+        <h1>Current Cateogry: {{currentCategory}}</h1>
+        </div>
+        
+        <div>
+            <select ng-model="selectedUser" ng-options="value.name for value in users"></select>
+            <h1>{{selectedUser.name}} {{selectedUser.apellido}}</h1>
+        </div>
+        
+        
+        
     </body>
 </html>
-<script>
-//https://www.w3schools.com/angular/angular_select.asp    
+<script type="text/javascript">
+//https://www.w3schools.com/angular/angular_select.asp
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope){
+    $scope.categories = ["Informatica","Mecanica","Moda"];
+    $scope.users = [
+        {id:1,name:"Moisés",apellido:"Aguilar",category:"Informatica"},
+        {id:2,name:"Emil",apellido:"Sorel",category:"Moda"},
+        {id:3,name:"Tobias",apellido:"Beecher",category:"Mecanica"},
+        {id:4,name:"Linus",apellido:"Torvals",category:"Informatica"}
+    ];
+    
+    $scope.currentCategory = "Informatica";
+    
+    $scope.setCurrentCategory = function(category){
+        $scope.currentCategory = category;
+        //alert(category);
+    }
+    
+    $scope.isCurrentCategory = function(){
+        return $scope.currentCategory;
+    }
+    
+});
 </script>
     
