@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html ng-app="myApp" ng-controller="myCtrl">
+<html ng-app="myApp">
     <head>
         <title>Prueba 1 - AngularJS</title>
-        <script type="text/javascript" src="lib/angular.js"></script>
-        <meta charset="utf8">
+        
+        <meta charset="UTF-8">
         <style>
             body{
                 text-align: center;
             }
         </style>
     </head>
-    <body>
+    <body ng-controller="myCtrl">
         
         <select ng-model="nombre">
             <option>Opcion1</option>
@@ -24,9 +24,9 @@
         
         <div>
             <select ng-model="selectedCategory">
-                <option ng-repeat="value in categories" value="{{value}}" ng-selected="setCurrentCategory(selectedCategory)">{{value}}</option>
+                <option ng-repeat="value in categories" value="{{value}}" ng-click="setCurrentCategory(selectedCategory)">{{value}}</option>
             </select>
-        <h1>Current Cateogry: {{currentCategory}}</h1>
+        <h1>Current Cateogry: {{isCurrentCategory()}}</h1>
         </div>
         
         <div>
@@ -34,11 +34,16 @@
             <h1>{{selectedUser.name}} {{selectedUser.apellido}}</h1>
         </div>
         
+        <div>
+            <ul>
+                <li ng-repeat="user in users | filter: {category: currentCategory}">
+                    <p>{{user.name}} {{user.apellido}}</p>
+                </li>
+            </ul>
+        </div>
         
-        
-    </body>
-</html>
-<script type="text/javascript">
+<script type="text/javascript" src="lib/angular.js"></script>
+<script>
 //https://www.w3schools.com/angular/angular_select.asp
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope){
@@ -50,7 +55,7 @@ app.controller('myCtrl', function($scope){
         {id:4,name:"Linus",apellido:"Torvals",category:"Informatica"}
     ];
     
-    $scope.currentCategory = "Informatica";
+    $scope.currentCategory = 'Informatica';
     
     $scope.setCurrentCategory = function(category){
         $scope.currentCategory = category;
@@ -63,4 +68,8 @@ app.controller('myCtrl', function($scope){
     
 });
 </script>
+
+    </body>
+</html>
+
     
