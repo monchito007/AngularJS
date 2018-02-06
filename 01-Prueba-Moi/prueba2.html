@@ -42,7 +42,7 @@
                     <h1>Results: <i>'{{isCurrentCategory()}}'</i></h1>
                     <ul>
                         <li ng-repeat="user in users | filter: {category: currentCategory}">
-                            <p>{{user.name}} {{user.apellido}}</p>
+                            <p>{{user.name}} {{user.surname}}</p>
                         </li>
                     </ul>
                 </div>
@@ -58,8 +58,28 @@
                       <div class="modal-body">
 
                           <form id="bookmarkForm">
-                              <p>Please enter the title and the url for your bookmark, all fields are required.</p>
+                              <p>Add user</p>
 
+                              <div class="form-group">
+                                <label for="title">Name</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="glyphicon glyphicon-bookmark"></i>
+                                    </div>
+                                    <input ng-model="bookmark.name" id="title" class="form-control" type="text" placeholder="Enter the Title">
+                                </div>    
+                              </div>
+
+                              <div class="form-group">
+                                <label for="url">Surname</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="glyphicon glyphicon-link"></i>
+                                    </div>
+                                    <input ng-model="bookmark.surname" id="url" class="form-control" type="url" placeholder="Enter the URL">
+                                </div>    
+                              </div>
+                              
                               <div class="form-group">
                                 <label for="category">Category</label>
                                 <div class="input-group">
@@ -67,26 +87,6 @@
                                         <i class="glyphicon glyphicon-bookmark"></i>
                                     </div>
                                     <select ng-model="bookmark.category" ng-options="value for value in categories" id="category" class="form-control"></select>
-                                </div>    
-                              </div>
-
-                              <div class="form-group">
-                                <label for="title">Title</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="glyphicon glyphicon-bookmark"></i>
-                                    </div>
-                                    <input ng-model="bookmark.title" id="title" class="form-control" type="text" placeholder="Enter the Title">
-                                </div>    
-                              </div>
-
-                              <div class="form-group">
-                                <label for="url">URL</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="glyphicon glyphicon-link"></i>
-                                    </div>
-                                    <input ng-model="bookmark.url" id="url" class="form-control" type="url" placeholder="Enter the URL">
                                 </div>    
                               </div>
 
@@ -120,10 +120,10 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope){
     $scope.categories = ["Informatica","Mecanica","Moda"];
     $scope.users = [
-        {id:1,name:"Moisés",apellido:"Aguilar",category:"Informatica"},
-        {id:2,name:"Emil",apellido:"Sorel",category:"Moda"},
-        {id:3,name:"Tobias",apellido:"Beecher",category:"Mecanica"},
-        {id:4,name:"Linus",apellido:"Torvals",category:"Informatica"}
+        {id:1,name:"Moisés",surname:"Aguilar",category:"Informatica"},
+        {id:2,name:"Emil",surname:"Sorel",category:"Moda"},
+        {id:3,name:"Tobias",surname:"Beecher",category:"Mecanica"},
+        {id:4,name:"Linus",surname:"Torvals",category:"Informatica"}
     ];
     
     $scope.currentCategory = 'Informatica';
