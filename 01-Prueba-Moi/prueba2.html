@@ -2,45 +2,49 @@
 <html ng-app="myApp">
     <head>
         <title>Prueba 1 - AngularJS</title>
-        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <style>
             body{
-                text-align: center;
+                background-color: gainsboro;
             }
+            
+            .sidebar{
+                background-color: dodgerblue;
+            }
+            .content{
+                background-color: #cacaca;
+            }
+            
         </style>
     </head>
     <body ng-controller="myCtrl">
         
-        <select ng-model="nombre">
-            <option>Opcion1</option>
-            <option>Opcion2</option>
-            <option>Opcion3</option>
-            <option>Opcion4</option>
-        </select>
-        
-        <!-- <input type="text" ng-model="nombre" /> -->
-        <h1>{{nombre}}</h1>
-        
-        <div>
-            <select ng-model="selectedCategory">
-                <option ng-repeat="value in categories" value="{{value}}" ng-click="setCurrentCategory(selectedCategory)">{{value}}</option>
-            </select>
-        <h1>Current Cateogry: {{isCurrentCategory()}}</h1>
-        </div>
-        
-        <div>
-            <select ng-model="selectedUser" ng-options="value.name for value in users"></select>
-            <h1>{{selectedUser.name}} {{selectedUser.apellido}}</h1>
-        </div>
-        
-        <div>
-            <ul>
-                <li ng-repeat="user in users | filter: {category: currentCategory}">
-                    <p>{{user.name}} {{user.apellido}}</p>
-                </li>
-            </ul>
-        </div>
+        <div class="container">
+            
+            <div class="row">
+                
+                <div class="col-sm-3 sidebar">
+                    <h1>Category</h1>
+                    <select ng-model="selectedCategory">
+                        <option ng-repeat="value in categories" value="{{value}}" ng-click="setCurrentCategory(selectedCategory)">{{value}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-9 content">
+                    <h1>Results: <i>'{{isCurrentCategory()}}'</i></h1>
+                    <ul>
+                        <li ng-repeat="user in users | filter: {category: currentCategory}">
+                            <p>{{user.name}} {{user.apellido}}</p>
+                        </li>
+                    </ul>
+                </div>
+            
+            </div><!-- row -->    
+                
+        </div><!-- container -->
         
 <script type="text/javascript" src="lib/angular.js"></script>
 <script>
