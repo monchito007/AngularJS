@@ -61,22 +61,22 @@
                               <p>Add user</p>
 
                               <div class="form-group">
-                                <label for="title">Name</label>
+                                <label for="name">Name</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="glyphicon glyphicon-bookmark"></i>
                                     </div>
-                                    <input ng-model="bookmark.name" id="title" class="form-control" type="text" placeholder="Enter the Title">
+                                    <input ng-model="bookmark.name" id="name" class="form-control" type="text" placeholder="Enter the Name">
                                 </div>    
                               </div>
 
                               <div class="form-group">
-                                <label for="url">Surname</label>
+                                <label for="surname">Surname</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="glyphicon glyphicon-link"></i>
                                     </div>
-                                    <input ng-model="bookmark.surname" id="url" class="form-control" type="url" placeholder="Enter the URL">
+                                    <input ng-model="bookmark.surname" id="surname" class="form-control" type="text" placeholder="Enter the Surname">
                                 </div>    
                               </div>
                               
@@ -109,12 +109,6 @@
         
 
 <script>
-$('#myModal').on('shown.bs.modal', function () {
-    alert('entra');
-    $('#myInput').trigger('focus');
-})
-</script>
-<script>
 //https://www.w3schools.com/angular/angular_select.asp
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope){
@@ -135,6 +129,11 @@ app.controller('myCtrl', function($scope){
     
     $scope.isCurrentCategory = function(){
         return $scope.currentCategory;
+    }
+    $scope.save = function(bookmark){
+        console.log(bookmark);
+        var idItem = $scope.users.length + 1;
+        $scope.users.push({'id':idItem,'name':bookmark.name,'surname':bookmark.surname,'category':bookmark.category});
     }
     
 });
