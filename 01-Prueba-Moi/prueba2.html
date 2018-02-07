@@ -53,20 +53,20 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Modal title</h4>
+                        <h4 class="modal-title">Add user</h4>
                       </div>
                       <div class="modal-body">
 
-                          <form id="bookmarkForm">
-                              <p>Add user</p>
+                          <form id="bookmarkForm" name="bookmarkForm">
+                              <p>Fill in the fields to add a user</p>
 
-                              <div class="form-group">
+                              <div class="form-group" ng-class="{'has-error:'bookmarkform.name.invalid && bookmarkform.name.dirty}">
                                 <label for="name">Name</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="glyphicon glyphicon-bookmark"></i>
                                     </div>
-                                    <input ng-model="bookmark.name" id="name" class="form-control" type="text" placeholder="Enter the Name">
+                                    <input ng-model="bookmark.name" ng-required="true" id="name" name="name" class="form-control" type="text" placeholder="Enter the Name">
                                 </div>    
                               </div>
 
@@ -76,7 +76,7 @@
                                     <div class="input-group-addon">
                                         <i class="glyphicon glyphicon-link"></i>
                                     </div>
-                                    <input ng-model="bookmark.surname" id="surname" class="form-control" type="text" placeholder="Enter the Surname">
+                                    <input ng-model="bookmark.surname" ng-required="true" id="surname" class="form-control" type="text" placeholder="Enter the Surname">
                                 </div>    
                               </div>
                               
@@ -86,7 +86,7 @@
                                     <div class="input-group-addon">
                                         <i class="glyphicon glyphicon-bookmark"></i>
                                     </div>
-                                    <select ng-model="bookmark.category" ng-options="value for value in categories" id="category" class="form-control"></select>
+                                    <select ng-model="bookmark.category" ng-required="true" ng-options="value for value in categories" id="category" class="form-control"></select>
                                 </div>    
                               </div>
 
