@@ -107,6 +107,7 @@
                 
         </div><!-- container -->
         
+        <!-- https://www.codejobs.biz/es/blog/2015/01/31/aprendiendo-angularjs-validacion-de-un-formulario -->
 
 <script>
 //https://www.w3schools.com/angular/angular_select.asp
@@ -133,7 +134,9 @@ app.controller('myCtrl', function($scope){
     $scope.save = function(bookmark){
         console.log(bookmark);
         var idItem = $scope.users.length + 1;
+        //var data = [{'id':idItem,'name':bookmark.name,'surname':bookmark.surname,'category':bookmark.category}];
         $scope.users.push({'id':idItem,'name':bookmark.name,'surname':bookmark.surname,'category':bookmark.category});
+        alert('Form submitted with' + JSON.stringify($scope.users));
     }
     
 });
