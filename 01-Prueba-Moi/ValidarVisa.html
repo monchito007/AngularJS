@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--
+Titulo: Validar Tarjeta Visa
+Autor: Moisés Aguilar Miranda
+Fecha: 15/02/2018
+-->
+<html ng-app="ValidarTJApp">
+    <head>
+        <title>Validar Tarjeta Visa</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/angular.js"></script>
+        <style>
+            body{
+                background-color: gainsboro;
+                text-align: center;
+                
+            }
+            #content{
+                background-color: dodgerblue;
+                box-shadow: 5px 5px 5px gray;
+            }
+            #logo{
+                padding: 20px;
+            }
+            #logo img{
+                
+                height: 100px;
+                
+            }
+            #form{
+                background-color: #cacaca;
+                padding: 20px;
+            }
+            #form input{
+                width: 300px;
+                text-align: center;
+            }
+            #generaNums{
+                background-color: #cacaca;
+                padding: 20px; 
+            }
+        </style>
+    </head>
+    <body ng-controller="CtrlValTJ">
+        <div id="content" class="container">
+            
+            <div class="row">
+            
+            <div id="titulo" class="col-sm-12"><h1>Validar Tarjeta de Crédito Visa</h1></div>
+            <div id="logo" class="col-sm-12"><img src="img/visa_logo.png"></div>
+            <div id="form" class="col-sm-12">
+                <form>
+                    <label>Introduce un número de tarjeta de crédito: Ej 4273670601881339</label>
+                    <br>
+                    <label>Automáticamente se generarán números de cuenta válidos.</label>
+                    <br>
+                    <input ng-model="num_tarjeta" ng-change="ValidarTJ_Visa(num_tarjeta)" type="text" id="num_tarjeta" name="num_tarjeta" placeholder="Número Visa..." maxlength="16">
+                    <br>
+                    <label class="mensaje">{{mensaje}}</label>
+                </form>
+            </div>
+            <div id="generaNums" class="col-sm-12">
+                <label>{{mensaje2}}</label>
+                <ul>
+                    <li ng-repeat="number in numsVisa">{{number}}</li>
+                </ul>
+            </div>
+            
+            </div><!-- row -->
+        </div><!-- container -->
+    </body>
+</html>
+<script>
+    var app = angular.module('ValidarTJApp',[]);
+    app.controller('CtrlValTJ', function($scope){
+        
+        $scope.mensaje = "";
+        
+        $scope.mensaje2 = "";
+        
+        $scope.numsVisa = [];
+        
+        
+        
+        $scope.ValidarTJ_Visa = function(numero_tarjeta){
+            
+            var cadena = numero_tarjeta.toString();
+            var longitud = cadena.length;
+            var cifra = null;
+            var cifra_cad=null;
+            var suma=0;
+            for (var i=0; i < longitud; i+=2){
+              cifra = parseInt(cadena.charAt(i))*2;
+              if (cifra > 9){ 
+                cifra_cad = cifra.toString();
+                cifra = parseInt(cifra_cad.charAt(0)) + 
+           parseInt(cifra_cad.charAt(1));
+              }
+              suma+=cifra;
+            }
+            for (var i=1; i < longitud; i+=2){
+              suma += parseInt(cadena.charAt(i));
+            }
+
+            if ((suma % 10) == 0){ 
+                //return("Número de tarjeta correcto");
+                $scope.mensaje = "Número de tarjeta correcto";
+                
+            } else {
+                $scope.mensaje = "El número de tarjeta no es válido";
+                //return("El número de tarjeta no es válido");
+            }
+            
+           if(numero_tarjeta===""){
+               $scope.mensaje = "";
+           }
+           
+           if(longitud===16){
+               
+               $scope.mensaje2 = "Números de tarjeta Visa válidos.";
+               $scope.numsVisa = [];
+               
+               for(x=0;x<100;x++){
+                    numero_tarjeta++;
+                    $scope.GeneraNumerosTJVisa(numero_tarjeta);
+               }
+               
+                
+           }
+           
+            
+        }
+        
+        $scope.GeneraNumerosTJVisa = function(numero_tarjeta){
+           
+            var cadena = numero_tarjeta.toString();
+            var longitud = cadena.length;
+            var cifra = null;
+            var cifra_cad=null;
+            var suma=0;
+            for (var i=0; i < longitud; i+=2){
+              cifra = parseInt(cadena.charAt(i))*2;
+              if (cifra > 9){ 
+                cifra_cad = cifra.toString();
+                cifra = parseInt(cifra_cad.charAt(0)) + 
+           parseInt(cifra_cad.charAt(1));
+              }
+              suma+=cifra;
+            }
+            for (var i=1; i < longitud; i+=2){
+              suma += parseInt(cadena.charAt(i));
+            }
+
+            if ((suma % 10) == 0){ 
+                //return("Número de tarjeta correcto");
+                $scope.numsVisa.push(numero_tarjeta)
+            
+        }
+    }
+    });
+</script>
