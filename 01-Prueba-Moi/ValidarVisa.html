@@ -14,13 +14,15 @@ Fecha: 15/02/2018
         <script type="text/javascript" src="lib/angular.js"></script>
         <style>
             body{
-                background-color: gainsboro;
+                background-color: #ececec;
                 text-align: center;
                 
             }
             #content{
                 background-color: dodgerblue;
                 box-shadow: 5px 5px 5px gray;
+                margin-top: 30px;
+                border-radius: 18px;
             }
             #logo{
                 padding: 20px;
@@ -28,7 +30,8 @@ Fecha: 15/02/2018
             #logo img{
                 
                 height: 100px;
-                
+                border-radius: 8px;
+                box-shadow: 2px 2px 6px black;                
             }
             #form{
                 background-color: #cacaca;
@@ -40,10 +43,14 @@ Fecha: 15/02/2018
             }
             #generaNums{
                 background-color: #cacaca;
-                padding: 20px; 
+                padding: 20px;
+                border-radius: 0 0 18px 18px;
             }
             #form .mensaje{
                 font-style: italic;
+            }
+            #header{
+                padding: 20px;
             }
         </style>
     </head>
@@ -52,25 +59,28 @@ Fecha: 15/02/2018
             
             <div class="row">
             
-            <div id="titulo" class="col-sm-12"><h1>Validar Tarjeta de Crédito Visa</h1></div>
-            <div id="logo" class="col-sm-12"><img src="img/visa_logo.png"></div>
-            <div id="form" class="col-sm-12">
-                <form>
-                    <label>Introduce un número de tarjeta de crédito: Ej 4273670601881339</label>
-                    <br>
-                    <label>Automáticamente se generarán números de cuenta válidos.</label>
-                    <br>
-                    <input ng-model="num_tarjeta" ng-change="ValidarTJ_Visa(num_tarjeta)" type="text" id="num_tarjeta" name="num_tarjeta" placeholder="Número Visa..." maxlength="16">
-                    <br>
-                    <label class="mensaje">{{mensaje}}</label>
-                </form>
-            </div>
-            <div id="generaNums" class="col-sm-12">
-                <label>{{mensaje2}}</label>
-                <ul>
-                    <li ng-repeat="number in numsVisa">{{number}}</li>
-                </ul>
-            </div>
+                <div id="header" class="col-sm-12">
+                    <div id="titulo" class="col-sm-12"><h1>Validar Tarjeta de Crédito Visa</h1></div>
+                    <div id="logo" class="col-sm-12"><img src="img/visa_logo.png"></div>
+                </div>
+
+                <div id="form" class="col-sm-12">
+                    <form>
+                        <label>Introduce un número de tarjeta de crédito: Ej 4273670601881339</label>
+                        <br>
+                        <label>Automáticamente se generarán números de cuenta válidos.</label>
+                        <br>
+                        <input ng-model="num_tarjeta" ng-change="ValidarTJ_Visa(num_tarjeta)" type="text" id="num_tarjeta" name="num_tarjeta" placeholder="Número Visa..." maxlength="16">
+                        <br>
+                        <label class="mensaje">{{mensaje}}</label>
+                    </form>
+                </div>
+                <div id="generaNums" class="col-sm-12">
+                    <label>{{mensaje2}}</label>
+                    <ul>
+                        <li ng-repeat="number in numsVisa">{{number}}</li>
+                    </ul>
+                </div>
             
             </div><!-- row -->
         </div><!-- container -->
