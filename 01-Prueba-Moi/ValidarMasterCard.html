@@ -15,32 +15,13 @@ Fecha: 26/02/2018
         <div>
             <input type="text" ng-model="CardNumber" name="CardNumber" id="CardNumber">
             <label>{{CardNumber}}</label>
-            <option ng-switch="type">
-                <input type="radio" id="type" name="type" ng-model="type" value="visa" checked>Visa<br> 
-                <input type="radio" id="type" name="type" ng-model="type" value="mastercard">MasterCard<br> 
+            <option ng-switch="ValidarTarjeta(CardNumber,type)">
+                <input type="radio" id="type" name="type" ng-model="type" value="Visa" checked />Visa<br> 
+                <input type="radio" id="type" name="type" ng-model="type" value="MasterCard">MasterCard<br> 
             </option>
+            <img ng-if="type = Visa" src="img/visa_logo.png">
             <label>{{type}}</label>
-        </div>
-        <div>
-            <input type="radio" ng-model="myVar" value="dogs">Dogs
-            <input type="radio" ng-model="myVar" value="tuts">Tutorials
-            <input type="radio" ng-model="myVar" value="cars">Cars
-            
-            <div ng-switch="myVar">
-                <div ng-switch-when="dogs">
-                   <h1>Dogs</h1>
-                   <p>Welcome to a world of dogs.</p>
-                </div>
-                <div ng-switch-when="tuts">
-                   <h1>Tutorials</h1>
-                   <p>Learn from examples.</p>
-                </div>
-                <div ng-switch-when="cars">
-                   <h1>Cars</h1>
-                   <p>Read about cars.</p>
-                </div>
-            </div>
-            
+            <label>{{mensaje}}</label>
         </div>
         
         
@@ -52,10 +33,24 @@ Fecha: 26/02/2018
         
         $scope.Visa = /^4\d{3}-?\d{4}-?\d{4}-?\d{4}$/;  //Visa
         $scope.Mastercard = /^5[1-5]\d{2}-?\d{4}-?\d{4}-?\d{4}$/;  //Mastercard
+        $scope.mensaje = "";
         
         $scope.ValidarTarjeta = function(CardNumber,Type){
             
-            alert(Type);
+            var ExpReg = "";
+            
+            if(Type==="Visa"){
+                ExpReg = $scope.Visa;
+            }else if(Type==="MasterCard"){
+                ExpReg = $scope.Mastercard;
+            }
+            
+            if (!CardNumber.match(ExpReg)){
+                $scope.mensaje = "No es un número de "+ Type +" correcto";
+            }else{
+                $scope.mensaje = "Número de "+ Type +" correcto";
+            }
+                
             
         }
         
