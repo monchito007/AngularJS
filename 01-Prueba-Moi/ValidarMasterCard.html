@@ -12,12 +12,18 @@ Fecha: 26/02/2018
         <script type="text/javascript" src="lib/angular.js"></script>
     </head>
     <body ng-controller="CtrlValMC">
-        <div>TODO write content</div>
+        <div>
+            <input type="text" ng-model="CardNumber" ng-change="ValidarTarjeta(CardNumber)" name="CardNumber" id="CardNumber">
+            <label>{{CardNumber}}</label>
+        </div>
     </body>
 </html>
 <script>
     var app = angular.module('ValidarMasterCard',[]);
     app.controller('CtrlValMC', function($scope){
+        
+        $scope.Visa = /^4\d{3}-?\d{4}-?\d{4}-?\d{4}$/;  //Visa
+        $scope.Mastercard = /^5[1-5]\d{2}-?\d{4}-?\d{4}-?\d{4}$/;  //Mastercard
         
         
         
