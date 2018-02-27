@@ -90,13 +90,11 @@ Fecha: 15/02/2018
     var app = angular.module('ValidarTJApp',[]);
     app.controller('CtrlValTJ', function($scope){
         
-        $scope.mensaje = "";
-        
+        $scope.mensaje = "";        
         $scope.mensaje2 = "";
-        
+        $scope.GeneraVisa = false;
         $scope.numsVisa = [];
-        
-        
+        var x = 0;
         
         $scope.ValidarTJ_Visa = function(numero_tarjeta){
             
@@ -118,35 +116,48 @@ Fecha: 15/02/2018
               suma += parseInt(cadena.charAt(i));
             }
 
-            if ((suma % 10) == 0){ 
-                //return("Número de tarjeta correcto");
-                $scope.mensaje = "Número de tarjeta correcto";
-                
-            } else {
-                $scope.mensaje = "El número de tarjeta no es válido";
-                //return("El número de tarjeta no es válido");
-            }
-            
-           if(numero_tarjeta===""){
-               $scope.mensaje = "";
-           }
+            //if($scope.GeneraVisa==false){
+
+                if ((suma % 10) == 0){ 
+                    $scope.mensaje = "Número de tarjeta correcto";
+                    $scope.numsVisa.push(numero_tarjeta);
+
+                } else {
+                    
+                    $scope.mensaje = "El número de tarjeta no es válido";
+                    
+                    //return("El número de tarjeta no es válido");
+                }
+
+               if(numero_tarjeta===""){
+                   $scope.mensaje = "";
+               }
+           
+            //}
            
            if(longitud===16){
                
+               $scope.GeneraVisa = true;
                $scope.mensaje2 = "Números de tarjeta Visa válidos.";
                $scope.numsVisa = [];
                
-               for(x=0;x<100;x++){
-                    numero_tarjeta++;
-                    $scope.GeneraNumerosTJVisa(numero_tarjeta);
+               while(x<10){
+                   alert(numero_tarjeta);
+                   numero_tarjeta++;
+                   x++;
+                   $scope.ValidarTJ_Visa(numero_tarjeta);
+                   
                }
                
+               //x=0;
+               $scope.GeneraVisa = false;
+               return;
                 
            }
            
             
         }
-        
+        /*
         $scope.GeneraNumerosTJVisa = function(numero_tarjeta){
            
             var cadena = numero_tarjeta.toString();
@@ -171,7 +182,7 @@ Fecha: 15/02/2018
                 //return("Número de tarjeta correcto");
                 $scope.numsVisa.push(numero_tarjeta)
             
-        }
-    }
+        }*/
+   
     });
 </script>
