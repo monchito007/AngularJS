@@ -7,26 +7,119 @@ Fecha: 26/02/2018
 <html ng-app="ValidarMasterCard">
     <head>
         <title>Validar Master Card</title>
+        <!-- Hoja de estilos Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+        <!-- Codificación de caracteres -->
         <meta charset="UTF-8">
+        <!-- Viewport -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Libreria AngularJS -->
         <script type="text/javascript" src="lib/angular.js"></script>
+        <!-- Libreria JQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <!-- Libreria Tether -->
+        <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+        <!-- Libreria Bootstrap -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+        <style>
+            body{
+                background-color: #ececec;
+                text-align: center;
+            }
+            div{
+                padding-bottom: 30px;
+            }
+            img{
+                width: 200px;
+                border-radius: 8px;
+                box-shadow: 2px 2px 6px black;
+            }
+            #contenedor{
+                background-color: dodgerblue;
+                box-shadow: 5px 5px 5px gray;
+                margin-top: 30px;
+                border-radius: 18px;
+            }
+            #calculadora input[type=text]{
+                width: 300px;
+            }
+            .disabled{
+                opacity: 0.5;
+            }
+            .hidden{
+                visibility: hidden;
+            }
+        </style>
     </head>
     <body ng-controller="CtrlValMC">
-        <div>
-            <input type="text" ng-model="CardNumber" name="CardNumber" id="CardNumber">
-            <label>{{CardNumber}}</label>
-            <option ng-switch="ValidarTarjeta(CardNumber,type)">
-                <input type="radio" id="type" name="type" ng-model="type" value="Visa" checked />Visa<br> 
-                <input type="radio" id="type" name="type" ng-model="type" value="MasterCard">MasterCard<br> 
-            </option>
-            <img ng-if="type = Visa" src="img/visa_logo.png">
-            <label>{{type}}</label>
-            <label>{{mensaje}}</label>
-        </div>
+        <div id="contenedor" class="container">
+            <div class="row">
+                
+                <div id="titulo" class="col-sm-12">
+                    <h1>Validador de tarjetas de crédito</h1>
+                </div>
+                <div id="descripcion" class="col-sm-12">
+                    <label>Selecciona el tipo de tarjeta:</label>
+                </div>
+                <div id="logo_visa" class="col-sm-6 disabled">
+                    <img src="img/visa_logo.png">
+                </div>
+                <div id="logo_mastercard" class="col-sm-6  disabled">
+                    <img src="img/mastercard_logo.png">
+                </div>
+                <div id="calculadora" class="col-sm-12 hidden">
+                    <label>Introduce el número de tarjeta de crédito: 4273670601881339</label><br>
+                    <input type="text" ng-model="CardNumber" name="CardNumber" id="CardNumber"><br>
+                    <label>{{CardNumber}}</label>
+                    <option ng-switch="ValidarTarjeta(CardNumber,type)">
+                        <input type="radio" id="radio_visa" name="radio_visa" ng-model="type" value="Visa">Visa<br> 
+                        <input type="radio" id="radio_mastercard" name="radio_mastercard" ng-model="type" value="MasterCard">MasterCard<br> 
+                    </option>
+                    <!--<label>{{type}}</label>-->
+                    <label>{{mensaje}}</label>
+                    
+                </div>
+                
+            </div><!-- row -->
+        </div><!-- container -->
         
         
     </body>
 </html>
+<script>
+$( document ).ready(function() {
+    
+    //$("#calculadora").hide();
+    
+    //Evento Click en Imagen Visa
+    $("#logo_visa").on("click", function(){
+        if($(this).hasClass("disabled")){
+            $(this).removeClass("disabled");
+        }
+        $("#logo_mastercard").addClass("disabled");
+        //Mostramos el formulario de la calculadora
+        $("#calculadora").removeClass("hidden");
+        //Seleccionamos el radio button oculto para visa
+        $("#radio_visa").prop("checked",true);
+        $("#radio_mastercard").prop("checked",false);
+        
+        angular.element('#contenedor').scope().ValidarTarjeta();
+        
+    });
+    //Evento Click en Imagen Mastercard
+    $("#logo_mastercard").on("click", function(){
+        if($(this).hasClass("disabled")){
+            $(this).removeClass("disabled");
+        }
+        $("#logo_visa").addClass("disabled");
+        //Mostramos el formulario de la calculadora
+        $("#calculadora").removeClass("hidden");
+        //Seleccionamos el radio button oculto para mastercard
+        $("#radio_mastercard").prop("checked",true);
+        $("#radio_visa").prop("checked",false);
+    });
+});
+</script>
 <script>
     var app = angular.module('ValidarMasterCard',[]);
     app.controller('CtrlValMC', function($scope){
@@ -36,6 +129,8 @@ Fecha: 26/02/2018
         $scope.mensaje = "";
         
         $scope.ValidarTarjeta = function(CardNumber,Type){
+            
+            alert("entra");
             
             var ExpReg = "";
             
