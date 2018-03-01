@@ -4,7 +4,7 @@ Titulo: Validar Tarjeta MasterCard
 Autor: Moisés Aguilar Miranda
 Fecha: 26/02/2018
 -->
-<html ng-app="ValidarMasterCard">
+<html ng-app="ValidarTarjetasCredito">
     <head>
         <title>Validar Master Card</title>
         <!-- Hoja de estilos Bootstrap -->
@@ -69,27 +69,26 @@ Fecha: 26/02/2018
                 </div>
                 <div id="calculadora" class="col-sm-12 hidden">
                     <label>Introduce el número de tarjeta de crédito: 4273670601881339</label><br>
-                    <input type="text" ng-model="CardNumber" name="CardNumber" id="CardNumber"><br>
+                    <input type="text" ng-model="CardNumber" ng-change="setCardNumber(CardNumber)" name="CardNumber" id="CardNumber" maxlength="16"><br>
                     <label>{{CardNumber}}</label>
-                    <option ng-switch="ValidarTarjeta(CardNumber,type)">
+                    <!--
+                    <option ng-switch="ValidarTarjeta(CardNumber)">
                         <input type="radio" id="radio_visa" name="radio_visa" ng-model="type" value="Visa">Visa<br> 
                         <input type="radio" id="radio_mastercard" name="radio_mastercard" ng-model="type" value="MasterCard">MasterCard<br> 
                     </option>
+                    -->
                     <!--<label>{{type}}</label>-->
                     <label>{{mensaje}}</label>
-                    
                 </div>
                 
             </div><!-- row -->
         </div><!-- container -->
         
-        
     </body>
 </html>
 <script>
-$( document ).ready(function() {
     
-    //$("#calculadora").hide();
+$( document ).ready(function() {
     
     //Evento Click en Imagen Visa
     $("#logo_visa").on("click", function(){
@@ -103,7 +102,10 @@ $( document ).ready(function() {
         $("#radio_visa").prop("checked",true);
         $("#radio_mastercard").prop("checked",false);
         
-        angular.element('#contenedor').scope().ValidarTarjeta();
+        var CardNumber = $("#CardNumber").val();
+        
+        angular.element($('#contenedor')).scope().setVisa();
+        angular.element($('#contenedor')).scope().ValidarTarjeta(CardNumber);
         
     });
     //Evento Click en Imagen Mastercard
@@ -117,22 +119,48 @@ $( document ).ready(function() {
         //Seleccionamos el radio button oculto para mastercard
         $("#radio_mastercard").prop("checked",true);
         $("#radio_visa").prop("checked",false);
+        
+        var CardNumber = $("#CardNumber").val();
+        
+        angular.element($('#contenedor')).scope().setMasterCard();
+        angular.element($('#contenedor')).scope().ValidarTarjeta(CardNumber);
+        
     });
 });
+
 </script>
 <script>
-    var app = angular.module('ValidarMasterCard',[]);
+    
+    var app = angular.module('ValidarTarjetasCredito',[]);
     app.controller('CtrlValMC', function($scope){
         
         $scope.Visa = /^4\d{3}-?\d{4}-?\d{4}-?\d{4}$/;  //Visa
         $scope.Mastercard = /^5[1-5]\d{2}-?\d{4}-?\d{4}-?\d{4}$/;  //Mastercard
         $scope.mensaje = "";
+        $scope.Type = "";
+        $scope.CardNumber = "";
         
-        $scope.ValidarTarjeta = function(CardNumber,Type){
+        $scope.setVisa = function(){
+            $scope.Type = "Visa";
+        }
+        
+        $scope.setMasterCard = function(){
+            $scope.Type = "MasterCard";
+        }
+        
+        /*
+        $scope.setCardNumber = function(CardNumber){
+            alert(CardNumber);
+            $scope.CardNumber = CardNumber;
+            $scope.ValidarTarjeta();
+        }
+        */
+        $scope.ValidarTarjeta = function(CardNumber){
             
-            alert("entra");
-            
+            var Type = $scope.Type;
+            //var CardNumber = $scope.CardNumber;
             var ExpReg = "";
+            
             
             if(Type==="Visa"){
                 ExpReg = $scope.Visa;
@@ -140,12 +168,15 @@ $( document ).ready(function() {
                 ExpReg = $scope.Mastercard;
             }
             
+            //alert("Cardnumber: " + CardNumber);
+            
             if (!CardNumber.match(ExpReg)){
                 $scope.mensaje = "No es un número de "+ Type +" correcto";
+                //alert($scope.mensaje);
             }else{
                 $scope.mensaje = "Número de "+ Type +" correcto";
+                //alert($scope.mensaje);
             }
-                
             
         }
         
