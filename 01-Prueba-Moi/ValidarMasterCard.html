@@ -36,9 +36,14 @@ Fecha: 26/02/2018
             }
             #contenedor{
                 background-color: dodgerblue;
-                box-shadow: 5px 5px 5px gray;
-                margin-top: 30px;
                 border-radius: 18px;
+                box-shadow: 5px 5px 5px gray;
+                height: 460px;
+                margin-top: 30px;                
+                padding: 20px;
+            }
+            #calculadora{
+                display: none;
             }
             #calculadora input[type=text]{
                 width: 300px;
@@ -67,7 +72,7 @@ Fecha: 26/02/2018
                 <div id="logo_mastercard" class="col-sm-6  disabled">
                     <img src="img/mastercard_logo.png">
                 </div>
-                <div id="calculadora" class="col-sm-12 hidden">
+                <div id="calculadora" class="col-sm-12">
                     <label>Introduce el número de tarjeta de crédito: 4273670601881339</label><br>
                     <input type="text" ng-model="CardNumber" ng-change="setCardNumber(CardNumber)" name="CardNumber" id="CardNumber" maxlength="16"><br>
                     <label>{{CardNumber}}</label>
@@ -97,7 +102,8 @@ $( document ).ready(function() {
         }
         $("#logo_mastercard").addClass("disabled");
         //Mostramos el formulario de la calculadora
-        $("#calculadora").removeClass("hidden");
+        //$("#calculadora").removeClass("hidden");
+        $("#calculadora").fadeIn(1000);
         //Seleccionamos el radio button oculto para visa
         $("#radio_visa").prop("checked",true);
         $("#radio_mastercard").prop("checked",false);
@@ -115,7 +121,8 @@ $( document ).ready(function() {
         }
         $("#logo_visa").addClass("disabled");
         //Mostramos el formulario de la calculadora
-        $("#calculadora").removeClass("hidden");
+        //$("#calculadora").removeClass("hidden");
+        $("#calculadora").fadeIn(1000);
         //Seleccionamos el radio button oculto para mastercard
         $("#radio_mastercard").prop("checked",true);
         $("#radio_visa").prop("checked",false);
