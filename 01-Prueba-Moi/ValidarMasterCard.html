@@ -49,6 +49,8 @@ Fecha: 26/02/2018
             }
             #calculadora input[type=text]{
                 width: 300px;
+                text-align: center;
+                font-weight: bold;
             }
             .hidden{
                 visibility: hidden;
@@ -144,7 +146,7 @@ $( document ).ready(function() {
         var CardNumber = $("#CardNumber").val();
         
         angular.element($('#contenedor')).scope().setVisa();
-        angular.element($('#contenedor')).scope().ValidarTarjeta(CardNumber);
+        angular.element($('#contenedor')).scope().setCardNumber(CardNumber);
         
     });
     //Evento Click en Imagen Mastercard
@@ -170,7 +172,7 @@ $( document ).ready(function() {
         var CardNumber = $("#CardNumber").val();
         
         angular.element($('#contenedor')).scope().setMasterCard();
-        angular.element($('#contenedor')).scope().ValidarTarjeta(CardNumber);
+        angular.element($('#contenedor')).scope().setCardNumber(CardNumber);
         
     });
 });
@@ -189,25 +191,25 @@ $( document ).ready(function() {
         
         $scope.setVisa = function(){
             $scope.Type = "Visa";
+            //$scope.ValidarTarjeta();
         }
         
         $scope.setMasterCard = function(){
             $scope.Type = "MasterCard";
+            //$scope.ValidarTarjeta();
         }
         
-        /*
         $scope.setCardNumber = function(CardNumber){
-            alert(CardNumber);
             $scope.CardNumber = CardNumber;
             $scope.ValidarTarjeta();
         }
-        */
-        $scope.ValidarTarjeta = function(CardNumber){
+        
+        $scope.ValidarTarjeta = function(){
             
+            var CardNumber = $scope.CardNumber;
             var Type = $scope.Type;
-            //var CardNumber = $scope.CardNumber;
             var ExpReg = "";
-            
+            $scope.mensaje = "";
             
             if(Type==="Visa"){
                 ExpReg = $scope.Visa;
@@ -215,14 +217,16 @@ $( document ).ready(function() {
                 ExpReg = $scope.Mastercard;
             }
             
-            //alert("Cardnumber: " + CardNumber);
+            if(CardNumber.length === 16){
             
-            if (!CardNumber.match(ExpReg)){
-                $scope.mensaje = "No es un número de "+ Type +" correcto";
-                //alert($scope.mensaje);
-            }else{
-                $scope.mensaje = "Número de "+ Type +" correcto";
-                //alert($scope.mensaje);
+                if (!CardNumber.match(ExpReg)){
+                    $scope.mensaje = "No es un número de "+ Type +" correcto";
+                    //alert($scope.mensaje);
+                }else{
+                    $scope.mensaje = "Número de "+ Type +" correcto";
+                    //alert($scope.mensaje);
+                }
+            
             }
             
         }
