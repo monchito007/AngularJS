@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--
+Titulo: Validar Tarjeta Visa
+Autor: Moisés Aguilar Miranda
+Fecha: 15/02/2018
+-->
+<html ng-app="ValidarTJApp">
+    <head>
+        <title>Validar Tarjeta Visa</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/angular.js"></script>
+        <style>
+            body{
+                background-color: #ececec;
+                text-align: center;
+                
+            }
+            #content{
+                background-color: dodgerblue;
+                box-shadow: 5px 5px 5px gray;
+                margin-top: 30px;
+                border-radius: 18px;
+            }
+            #logo{
+                padding: 20px;
+            }
+            #logo img{
+                
+                height: 100px;
+                border-radius: 8px;
+                box-shadow: 2px 2px 6px black;                
+            }
+            #form{
+                background-color: #cacaca;
+                padding: 20px;
+            }
+            #form input{
+                width: 300px;
+                text-align: center;
+            }
+            #generaNums{
+                background-color: #cacaca;
+                padding: 20px;
+                border-radius: 0 0 18px 18px;
+            }
+            #form .mensaje{
+                font-style: italic;
+            }
+            #header{
+                padding: 20px;
+            }
+        </style>
+    </head>
+    <body ng-controller="CtrlValTJ">
+        <div id="content" class="container">
+            
+            <div class="row">
+            
+                <div id="titulo" class="col-sm-12"><h1>Resultado</h1></div>
+                <div id="resultado" class="col-sm-12">
+                    
+                </div>
+            
+            </div><!-- row -->
+        </div><!-- container -->
+    </body>
+</html>
+<script>
+
+var entidad=2100;
+var sucursal=17;
+var dc=12;
+var nCuenta=1234567890;
+iban = false;
+
+function calculaIBANSpain(entidad,sucursal,cuenta) {
+    var countryCode = "1428"; // Spain code
+ 
+    var iban = entidad+sucursal;
+ 
+    iban = "" + (iban % 97) + cuenta + cuenta.substring(0,2);
+    iban = "" + (iban % 97) + cuenta.substring(2,cuenta.length) + countryCode + '00';
+ 
+    modIban = iban % 97;
+    ccIban = 98 - modIban;
+            if(ccIban<10)
+        ccIban = "0" + ccIban;
+ 
+    return "ES" + CC_iban;
+        }
+
+function compruebaCCC(entidad,sucursal,dc,nCuenta){
+            
+    entidad = rellenaCeros(entidad,4);
+    sucursal = rellenaCeros(sucursal,4);
+    dc = rellenaCeros(dc,2);
+    nCuenta = rellenaCeros(nCuenta,10);
+
+    var concatenado = entidad+sucursal;
+    var dc1 = calculaDCParcial(concatenado);
+    var dc2 = calculaDCParcial(nCuenta);
+    //return (dc===(dc1+dc2));
+    if((dc===(dc1+dc2))===true){
+        return (entidad +" "+ sucursal +" "+ dc +" "+ nCuenta);
+        IBAN = calculaIBANSpain(entidad,sucursal,dc+""+nCuenta);
+    }else{
+        return false;
+    }
+
+}
+        
+function calculaDCParcial(cadena){
+
+    var dcParcial = 0;
+    var tablaPesos = [6,3,7,9,10,5,8,4,2,1];
+    var suma = 0;
+    var i;
+    for(i=0;i<cadena.length;i++){
+        suma = suma + cadena.charAt(cadena.length-1-i)*tablaPesos[i];
+    }
+    dcParcial = (11-(suma % 11));
+    if(dcParcial===11){dcParcial=0;}
+    else if(dcParcial===10){dcParcial=1;}
+
+    return dcParcial.toString();
+
+}
+        
+function rellenaCeros(numero,longitud){
+            
+    var ceros = '';
+    var i;
+    numero = numero.toString();
+    for(i=0;(longitud-numero.length)>i;i++){
+            ceros += '0';
+    }	
+    return ceros+numero;
+
+}
+
+
+
+resultado = false
+
+cont = 0;
+
+while(resultado==false){
+    
+    //sucursal = Math.round(Math.random()*99);
+    dc = Math.round(Math.random()*99);
+    nCuenta = Math.round(Math.random()*999999999);
+    
+    resultado = compruebaCCC(entidad,sucursal,dc,nCuenta);
+    
+    //document.getElementById("resultado").innerHTML += "<br>"+nCuenta;
+    
+    cont = cont + 1;
+    
+}
+
+
+document.getElementById("resultado").innerHTML += "CCC: " + resultado;
+//document.getElementById("resultado").innerHTML += entidad +" "+ sucursal +" "+ dc +" "+ nCuenta;
+document.getElementById("resultado").innerHTML += "<br>IBAN: " + iban;
+document.getElementById("resultado").innerHTML += "<br>cont: " + cont;
+//alert(sucursal);
+
+      
+</script>
