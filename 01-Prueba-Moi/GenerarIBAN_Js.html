@@ -11,6 +11,7 @@ Fecha: 15/02/2018
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+        <script src="js/iban.js"></script>
         <script type="text/javascript" src="lib/angular.js"></script>
         <style>
             body{
@@ -86,10 +87,9 @@ function calculaIBANSpain(entidad,sucursal,cuenta) {
  
     modIban = iban % 97;
     ccIban = 98 - modIban;
-            if(ccIban<10)
-        ccIban = "0" + ccIban;
+    if(ccIban<10){ccIban = "0" + ccIban};
  
-    return "ES" + CC_iban;
+    return "ES" + ccIban;
         }
 
 function compruebaCCC(entidad,sucursal,dc,nCuenta){
@@ -104,8 +104,8 @@ function compruebaCCC(entidad,sucursal,dc,nCuenta){
     var dc2 = calculaDCParcial(nCuenta);
     //return (dc===(dc1+dc2));
     if((dc===(dc1+dc2))===true){
+        iban = calculaIBANSpain(entidad,sucursal,dc+nCuenta);
         return (entidad +" "+ sucursal +" "+ dc +" "+ nCuenta);
-        IBAN = calculaIBANSpain(entidad,sucursal,dc+""+nCuenta);
     }else{
         return false;
     }
@@ -153,6 +153,11 @@ while(resultado==false){
     dc = Math.round(Math.random()*99);
     nCuenta = Math.round(Math.random()*999999999);
     
+    //Ejemplo ES57-2100-0017-51-0333797355
+    //dc = 51;
+    //nCuenta = 0333797355;
+    
+    
     resultado = compruebaCCC(entidad,sucursal,dc,nCuenta);
     
     //document.getElementById("resultado").innerHTML += "<br>"+nCuenta;
@@ -161,10 +166,69 @@ while(resultado==false){
     
 }
 
+//Añadir Ceros para Entidad y Sucursal
+function addCeros(num){
+   
+   var max_length = 4;
+   num = num.toString();
+   var length = num.length;
+   
+   length = max_length - length;
+   
+   
+   for(var x=0;x<length;x++){
+       num = "0"+num;
+   }     
+        
+   return num;
+    
+}
+
+//Añadir Ceros para nCuenta
+function addCeros2(num){
+   
+   var max_length = 2;
+   num = num.toString();
+   var length = num.length;
+   
+   length = max_length - length;
+   
+   
+   for(var x=0;x<length;x++){
+       num = "0"+num;
+   }     
+        
+   return num;
+    
+}
+//Añadir Ceros para nCuenta
+function addCeros3(num){
+   
+   var max_length = 10;
+   num = num.toString();
+   var length = num.length;
+   
+   length = max_length - length;
+   
+   
+   for(var x=0;x<length;x++){
+       num = "0"+num;
+   }     
+        
+   return num;
+    
+}
+
+//alert(addCeros(17));
+
 
 document.getElementById("resultado").innerHTML += "CCC: " + resultado;
 //document.getElementById("resultado").innerHTML += entidad +" "+ sucursal +" "+ dc +" "+ nCuenta;
-document.getElementById("resultado").innerHTML += "<br>IBAN: " + iban;
+
+num_ccc = (addCeros(entidad) +"-"+ addCeros(sucursal) +"-"+ addCeros2(dc) +"-"+ addCeros3(nCuenta)).toString();
+
+document.getElementById("resultado").innerHTML += "<br>IBAN: " + IBAN.convertir(num_ccc);
+alert(num_ccc);
 document.getElementById("resultado").innerHTML += "<br>cont: " + cont;
 //alert(sucursal);
 
